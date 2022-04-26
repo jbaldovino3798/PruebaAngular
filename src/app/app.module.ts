@@ -11,6 +11,7 @@ import { DataService} from './services/data.service';
 import { MainComponent } from './components/main/main.component';
 import { HeaderComponent } from './plantilla/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DogEditComponent } from './components/dog-edit/dog-edit.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
     DogAddComponent,
     DogListComponent,
     MainComponent,
-    HeaderComponent
+    HeaderComponent,
+    DogEditComponent
   ],
   imports: [
     BrowserModule,

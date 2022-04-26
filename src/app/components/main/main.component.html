@@ -1,19 +1,24 @@
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Imagen de la Raza</th>
-            <th scope="col">Nombre de la Raza</th>
-            <th scope="col">Cantidad de perros inscritos</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of races">
-            <!--<th scope="row">{{item.name}}</th> -->
-            <td></td>
-            <!--<td><img src="{{item.url}}" alt=""></td> -->
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-    </tbody>
-</table>
+<div class="container">
+    <div class="table-responsive-sm">
+        <table class="table" *ngIf="lista.length>0">
+            <thead>
+                <tr>
+                    <th scope="col">Imagen de la Raza</th>
+                    <th scope="col">Nombre de la Raza</th>
+                    <th scope="col">Cantidad de Perros</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of lista;let i=index">
+                    <td><img [src]="item.img" alt="" class="rounded-circle" style="max-width: 143px;max-height: 100px;"></td>
+                    <td>{{item.raza}}</td>
+                    <td>{{item.cantidadInscritos}}</td>
+                    <td><button (click)="goToAdd(item.raza, item.img)" class="btn btn-primary">Inscribir</button>
+                        <button (click)="goToList(item.raza)" class="btn btn-warning">Listar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

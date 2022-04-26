@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Race } from '../models/Race';
-import { Image } from '../models/Image';
+import { Dog } from 'src/app/models/Dog';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -9,7 +8,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class DataService {
 
-  constructor(private http:HttpClient) {}
+  constructor(public http:HttpClient) {
+    this.getStorage();
+  }
+
+  public dogList:Dog[]=[];
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -17,14 +20,27 @@ export class DataService {
     })
   }
 
-  getAllRaces():Observable<Race[]>{
+  getAllRaces(){
     let url = "https://dog.ceo/api/breeds/list/all";
 
-    return this.http.get<Race[]>(url);
+    return this.http.get<any>(url);
   }
 
-  getImages(raza : String):Observable<Image[]>{
+  getImage(raza : String):Observable<any[]>{
     let url = "https://dog.ceo/api/breed/"+raza+"/images/random";
-    return this.http.get<Image[]>(url);
+    return this.http.get<any[]>(url);
   }
+
+  saveStorage() {
+    localStorage.setItem('data', JSON.stringify(this.dogList));    
+  }
+
+  getStorage() {
+    /*if (localStorage.getItem('data')) {
+      this.lista = JSON.parse(localStorage.getItem('data'));
+       console.log(this.list[0].perros);    
+    } else {
+      this.dogList = [];
+    }*/   
+  }  
 } 

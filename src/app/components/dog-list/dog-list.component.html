@@ -1,1 +1,27 @@
-<p>dog-list works!</p>
+<div class="container">
+    <label>La raza escogida fue {{race}}</label>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Nombre del Perro</th>
+                    <th scope="col">Fecha de Nacimiento</th>
+                    <th scope="col">Edad</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of dogList;let i=index">
+                    <td>{{item.id}}</td>
+                    <td>{{item.nombre}}</td>
+                    <td>{{item.fecha_nac}}</td>
+                    <td>{{item.edad}}</td>
+                    <td><button class="btn btn-primary">Editar</button>
+                        <button class="btn btn-warning">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

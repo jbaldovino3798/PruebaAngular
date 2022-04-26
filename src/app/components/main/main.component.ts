@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
-import { Race } from '../../models/Race';
-import { Image } from '../../models/Image';
+import { Raza } from 'src/app/models/Dog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -10,23 +10,35 @@ import { Image } from '../../models/Image';
 })
 export class MainComponent implements OnInit {
 
-   races: Race[] = [];
-   images: any = [];
+   lista:Raza[]=[];
+   
 
-  constructor(public api:DataService) { }
+  constructor(public api:DataService, private router: Router) { }
 
   ngOnInit(): void {
-    this.api.getAllRaces().subscribe((e: Race[]) => {
-      this.races = e;
-      console.log(this.races);
+    this.api.getAllRaces().subscribe((res: any) => {
+
+     /*  this.races = e;
+      console.log(this.races); */
+      for (const key in res.message) {
+        if (Object.prototype.hasOwnProperty.call(res.message, key)) {
+          const element = res.message[key];       
+        }
+        this.api.getImage(key).subscribe((res2:any)=>{       
+        this.lista.push({img:res2.message,raza:key,cantidadInscritos:0})          
+        });     
+      }
+      //console.log(this.lista)
     })
+  } 
 
-    this.api.getImages("affenpinscher").subscribe((r: Image[]) => {
-      this.images = r;
-      console.log(this.images.message);
-    }) 
+  goToAdd(raza:String, img: String) {
+    this.router.navigate(['/add'], { queryParams: { race: raza, image: img} });
+  }   
+
+  goToList(raza:String) {
+    this.router.navigate(['/list'], { queryParams: { race: raza } });
   }
-
  }
 
 
