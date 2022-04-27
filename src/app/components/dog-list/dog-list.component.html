@@ -15,10 +15,10 @@
                 <tr *ngFor="let item of dogList;let i=index">
                     <td>{{item.id}}</td>
                     <td>{{item.nombre}}</td>
-                    <td>{{item.fecha_nac}}</td>
+                    <td>{{item.fecha_nac | date: 'dd/MM/yyyy'}}</td>
                     <td>{{item.edad}}</td>
-                    <td><button class="btn btn-primary">Editar</button>
-                        <button class="btn btn-warning">Eliminar</button>
+                    <td><button (click)="goToEdit(item.id)" class="btn btn-warning">Editar</button>
+                        <button (click)="deleteDog(item.id)" class="btn btn-danger">Eliminar</button>
                     </td>
                 </tr>
             </tbody>

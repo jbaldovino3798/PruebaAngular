@@ -10,26 +10,12 @@ import { Router } from '@angular/router';
 })
 export class MainComponent implements OnInit {
 
-   lista:Raza[]=[];
-   
+  razaList:Raza[]=[];  
 
   constructor(public api:DataService, private router: Router) { }
 
   ngOnInit(): void {
-    this.api.getAllRaces().subscribe((res: any) => {
-
-     /*  this.races = e;
-      console.log(this.races); */
-      for (const key in res.message) {
-        if (Object.prototype.hasOwnProperty.call(res.message, key)) {
-          const element = res.message[key];       
-        }
-        this.api.getImage(key).subscribe((res2:any)=>{       
-        this.lista.push({img:res2.message,raza:key,cantidadInscritos:0})          
-        });     
-      }
-      //console.log(this.lista)
-    })
+    this.razaList = this.api.razaList;
   } 
 
   goToAdd(raza:String, img: String) {

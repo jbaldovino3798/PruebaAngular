@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { Dog } from 'src/app/models/Dog';
 import { ActivatedRoute} from '@angular/router';
+import { Router } from '@angular/router';
+import  Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dog-list',
@@ -13,7 +15,7 @@ export class DogListComponent implements OnInit {
   race : String = "";
   raza : String = "";
   dogList : Array<Dog> = [];
-  constructor(public api:DataService, private ActivatedRouter: ActivatedRoute) { 
+  constructor(public api:DataService, private ActivatedRouter: ActivatedRoute, private router: Router) { 
     this.ActivatedRouter.queryParams.subscribe(params=>{
       this.raza = params['race'];
     });
@@ -32,23 +34,38 @@ export class DogListComponent implements OnInit {
   }  
 
   getDogs(raza: String){  
-    console.log(raza);
     for(let i=0; i<this.api.dogList.length; i++){
       if(this.api.dogList[i].raza == this.raza){
-        console.log("if");
-        console.log(this.api.dogList[i]);
         this.dogList.push(this.api.dogList[i]);
-      }else{
-        console.log("else");
-        console.log(this.api.dogList[i]);
       }
     }    
   }
 
-  deleteDog(id:number, raza: string, nombre: string, fecha_nac: string, edad: number){
-    const dog = new Dog(id,raza,nombre,fecha_nac,edad);
-    this.dogList.push(dog);
-    //this.saveStorage();
-    console.log(this.dogList);
+  goToEdit(id: number){
+    this.router.navigate(['/edit'], { queryParams: { id: id } });
+  }
+
+  deleteDog(id:number){
+    Swal.fire({
+      title: 'Esta seguro?',
+      text: "No podras revertir esta acción",
+      icon: 'warning',
+      showCancelButton: true,
+      allowOutsideClick: false,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Eliminar'
+    }).then((result) => {
+    this.api.dogList.splice((id-1),1);
+    this.api.saveStorage();
+  if (result.value) {
+    Swal.fire(
+      'Eliminado',
+      'El perro ha sido eliminado.',
+      'success') .then(() => {   
+        window.location.reload();
+      })
+  }})    
   }
 }
